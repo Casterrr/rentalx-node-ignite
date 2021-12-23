@@ -8,36 +8,28 @@ import {
 import { Category } from "../entities/Category";
 
 class CategoriesRepository implements ICategoriesRepository {
-    private respository: Repository<Category>;
+    private repository: Repository<Category>;
 
     constructor() {
-        this.respository = getRepository(Category);
+        this.repository = getRepository(Category);
     }
 
-    // public static getInstance(): CategoriesRepository {
-    //     if (!CategoriesRepository.INSTANCE) {
-    //         CategoriesRepository.INSTANCE = new CategoriesRepository();
-    //     }
-
-    //     return CategoriesRepository.INSTANCE;
-    // }
-
     async create({ description, name }: ICreateCategoryDTO): Promise<void> {
-        const category = this.respository.create({
+        const category = this.repository.create({
             description,
             name,
         });
 
-        await this.respository.save(category);
+        await this.repository.save(category);
     }
 
     async list(): Promise<Category[]> {
-        const categories = await this.respository.find();
+        const categories = await this.repository.find();
         return categories;
     }
 
     async findByName(name: string): Promise<Category> {
-        const category = await this.respository.findOne({ name });
+        const category = await this.repository.findOne({ name });
 
         return category;
     }

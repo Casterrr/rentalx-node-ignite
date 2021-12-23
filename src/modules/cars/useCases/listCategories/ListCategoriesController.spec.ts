@@ -7,10 +7,9 @@ import { app } from "@shared/infra/http/app";
 import createConnection from "@shared/infra/typeorm";
 
 let connection: Connection;
-describe("Create Category Controller", () => {
+describe("List Category Controller", () => {
     beforeAll(async () => {
         connection = await createConnection();
-        // await connection.dropDatabase();
         await connection.runMigrations();
 
         const id = uuid();
@@ -28,15 +27,13 @@ describe("Create Category Controller", () => {
         await connection.close();
     });
 
-    it("should be able to list all categories", async () => {
+    it("should be able to list all categories ", async () => {
         const responseToken = await request(app).post("/sessions").send({
             email: "admin@rentx.com.br",
             password: "admin",
         });
 
         const { token } = responseToken.body;
-
-        console.log(token);
 
         await request(app)
             .post("/categories")
