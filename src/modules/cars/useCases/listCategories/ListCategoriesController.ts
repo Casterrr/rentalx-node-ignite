@@ -9,6 +9,9 @@ class ListCategoriesController {
 
         const all = await listCategoriesUseCase.execute();
 
+        console.log("Categorias vindas no ListCategoriesController:");
+        console.log(all);
+
         return response.json(all);
     }
 }
