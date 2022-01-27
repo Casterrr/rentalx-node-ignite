@@ -7,7 +7,7 @@ import { app } from "@shared/infra/http/app";
 import createConnection from "@shared/infra/typeorm";
 
 let connection: Connection;
-describe("List Category Controller", () => {
+describe("Create Category Controller", () => {
     beforeAll(async () => {
         connection = await createConnection();
         await connection.runMigrations();
@@ -17,8 +17,8 @@ describe("List Category Controller", () => {
 
         await connection.query(
             `INSERT INTO USERS(id, name, email, password, "isAdmin", created_at, driver_license ) 
-            values('${id}', 'admin', 'admin@rentx.com.br', '${password}', true, 'now()', 'XXXXXX')
-            `
+        values('${id}', 'admin', 'admin@rentx.com.br', '${password}', true, 'now()', 'XXXXXX')
+      `
         );
     });
 
@@ -33,9 +33,7 @@ describe("List Category Controller", () => {
             password: "admin",
         });
 
-        const { token } = responseToken.body;
-
-        console.log(token);
+        const { refresh_token } = responseToken.body;
 
         await request(app)
             .post("/categories")
@@ -44,12 +42,10 @@ describe("List Category Controller", () => {
                 description: "Category Supertest",
             })
             .set({
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${refresh_token}`,
             });
 
         const response = await request(app).get("/categories");
-
-        console.log(response.body);
 
         expect(response.status).toBe(200);
         expect(response.body.length).toBe(1);
