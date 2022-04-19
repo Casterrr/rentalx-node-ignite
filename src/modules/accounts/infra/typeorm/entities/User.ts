@@ -1,11 +1,5 @@
 import { Expose } from "class-transformer";
-import {
-    Column,
-    CreateDateColumn,
-    Entity,
-    Index,
-    PrimaryColumn,
-} from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
 @Entity("users")
